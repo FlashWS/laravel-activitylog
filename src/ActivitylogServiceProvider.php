@@ -9,6 +9,7 @@ use Spatie\Activitylog\Exceptions\InvalidConfiguration;
 use Spatie\Activitylog\Models\Activity as ActivityModel;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use PhpClickHouseLaravel\BaseModel;
 
 class ActivitylogServiceProvider extends PackageServiceProvider
 {
@@ -41,7 +42,8 @@ class ActivitylogServiceProvider extends PackageServiceProvider
         $activityModel = config('activitylog.activity_model') ?? ActivityModel::class;
 
         if (! is_a($activityModel, Activity::class, true)
-            || ! is_a($activityModel, Model::class, true)) {
+            || ! is_a($activityModel, Model::class, true)
+            || ! is_a($activityModel, BaseModel::class, true)) {
             throw InvalidConfiguration::modelIsNotValid($activityModel);
         }
 
